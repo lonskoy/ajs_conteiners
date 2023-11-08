@@ -5,30 +5,50 @@ class Team {
     this.members = new Set();
   }
 
-  add(obj) {                            
-    if (this.members.has(obj)) {          // По чему проверка не рабоатет?
-      new Error("Персонаж уже добавлен");
+  add(obj) {
+    if (this.members.has(obj)) {
+      throw new Error('Пресонаж уже добавлен');
     } else this.members.add(obj);
   }
 
-  addAll([...obj]) {
-    this.members.add(obj);
+  addAll(...obj) {
+    obj.forEach((elem) => {
+      if (this.members.has(elem)) {
+        throw new Error('Пресонаж уже добавлен');
+      }
+      else this.members.add(elem);
+    });
   }
 
   toArray() {
-    const array = Array.toArray(this.members);
-    return array;
+    const arrTeam = Array.from(this.members);
+    return arrTeam;
   }
 }
 
-const hero1 = new Character("Ivan", "Bowman");
-const hero2 = new Character("Oleg", "Daemon");
-const hero3 = new Character("Pavel", "Zombie");
 
-const team = new Team();
-team.addAll([hero1, hero2, hero3]);
+class ErrorRepository {
+  constructor() {
+    this.errBase = new Map();
+  }
 
-console.log(team);
+  addErr(code, message) {
+    this.errBase.add({key: code, value: message});
+  }
+
+  translate(code){
+    this.errBase.forEach(elem => {
+      if(code === elem.key) {
+        return elem.value;
+      }
+      else console.log('Unknown error');
+    });
+  }
+
+}
+
+export default all;
+
 
 
 
