@@ -1,6 +1,6 @@
 import Character from "../js/class/Character.js";
 
-class Team {
+export class Team {
   constructor() {
     this.members = new Set();
   }
@@ -27,27 +27,27 @@ class Team {
 }
 
 
-class ErrorRepository {
+export class ErrorRepository {
   constructor() {
     this.errBase = new Map();
   }
 
   addErr(code, message) {
-    this.errBase.add({key: code, value: message});
+    this.errBase.set({code, message});
   }
 
   translate(code){
-    this.errBase.forEach(elem => {
-      if(code === elem.key) {
-        return elem.value;
-      }
-      else console.log('Unknown error');
-    });
+    if(this.members.has(code)){
+      return this.members.get(code);
+    }
+    else{
+      console.log('Unknown error');
+    }
+      
   }
 
 }
 
-export default all;
 
 
 
